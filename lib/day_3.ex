@@ -1,14 +1,36 @@
 defmodule Day3 do
   @behaviour Solution
 
+  @test_input """
+  ..##.......
+  #...#...#..
+  .#....#..#.
+  ..#.#...#.#
+  .#...##..#.
+  ..#.##.....
+  .#.#.#....#
+  .#........#
+  #.##...#...
+  #...##....#
+  .#..#...#.#
+  """
+
+  @doc """
+  iex> solve_part_1(#{inspect(@test_input)})
+  7
+  """
   def solve_part_1(input) do
     input
-    |> convert()
+    |> trees()
     |> calculate_tree_count(3, 1)
   end
 
+  @doc """
+  iex> solve_part_2(#{inspect(@test_input)})
+  336
+  """
   def solve_part_2(input) do
-    rows = convert(input)
+    rows = trees(input)
 
     [
       calculate_tree_count(rows, 1, 1),
@@ -18,14 +40,6 @@ defmodule Day3 do
       calculate_tree_count(rows, 1, 2)
     ]
     |> Enum.reduce(&(&1 * &2))
-  end
-
-  defp convert(input) do
-    input
-    |> String.split()
-    |> List.pop_at(0)
-    |> elem(1)
-    |> Enum.with_index(1)
   end
 
   defp calculate_tree_count(rows, right, down) do
@@ -52,5 +66,13 @@ defmodule Day3 do
     else
       position
     end
+  end
+
+  defp trees(input) do
+    input
+    |> String.split()
+    |> List.pop_at(0)
+    |> elem(1)
+    |> Enum.with_index(1)
   end
 end

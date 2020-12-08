@@ -1,9 +1,19 @@
 defmodule Day2 do
   @behaviour Solution
 
+  @test_input """
+  1-3 a: abcde
+  1-3 b: cdefg
+  2-9 c: ccccccccc
+  """
+
+  @doc """
+  iex> solve_part_1(#{inspect(@test_input)})
+  2
+  """
   def solve_part_1(input) do
     input
-    |> convert()
+    |> policies()
     |> Enum.reduce(0, fn {min, max, policy, password}, acc ->
       letters = String.codepoints(password)
 
@@ -24,9 +34,13 @@ defmodule Day2 do
     end)
   end
 
+  @doc """
+  iex> solve_part_2(#{inspect(@test_input)})
+  1
+  """
   def solve_part_2(input) do
     input
-    |> convert()
+    |> policies()
     |> Enum.reduce(0, fn {pos_1, pos_2, policy, password}, acc ->
       char_1 = String.at(password, pos_1 - 1)
       char_2 = String.at(password, pos_2 - 1)
@@ -39,7 +53,7 @@ defmodule Day2 do
     end)
   end
 
-  defp convert(input) do
+  defp policies(input) do
     input
     |> String.split("\n")
     |> List.delete("")
