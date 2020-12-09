@@ -144,7 +144,7 @@ defmodule Day4 do
     {hash, chars} =
       passport
       |> Map.get(@hcl)
-      |> String.codepoints()
+      |> String.graphemes()
       |> List.pop_at(0)
 
     valid_characters = [
@@ -189,7 +189,7 @@ defmodule Day4 do
     digits =
       passport
       |> Map.get(@pid)
-      |> String.codepoints()
+      |> String.graphemes()
 
     length(digits) == 9 and Enum.all?(digits, &is_number?/1)
   end
